@@ -1,3 +1,4 @@
+ad
 # CSDM: Common Service Data Model
 CSDM is :
 - standard terms and definitions
@@ -6,9 +7,9 @@ CSDM is :
 - Guidance on service modeling
 - recommended mappings
 CSDM is not:
-- process ot implementatin guide goe ITSM, SPM, APM, EM, or other products
+- process of implementation guide goe ITSM, SPM, APM, EM, or other products
 - Not set of reports or code to install or a SKU or product as well
-- Not a automatic fix for past implementations
+- Not an automatic fix for past implementations
 
 CSDM has 4 Domains: Foundation, Design, Manage Technical Services, and Sell/Consume.
 ## Foundation Domain: table has base critical referencial data like CMDB group, Product model, contracts.
