@@ -89,7 +89,24 @@ Cypher is a declarative query language that allows you to identify patterns in y
 - (p:Person)-[r:ACTED_IN]→(m:Movie) : This pattern finds all nodes with a label of Person, that have an outgoing ACTED_IN relationship to a node with a label of Movie. p is a variable
 - (p:Person) : nodes are used inside parentheses with their label(s) or properties.
 - -[r:ACTED_IN]→ : Relationships are used inside Square bracket and - and --> used to define direction of relationship. he relationship type is prefixed with a colon - [:TYPE]. r is a variable used to store a relationship object
-- 
-- 
+
+## 6. Creating Graphs
+MERGE clause is used to update node properties and create graph
+```
+--Add property to movie node
+MERGE (m:Movie {title: "Arthur the King"})
+SET m.year = 2024
+RETURN m
+
+--Create a relationship between nodes
+MERGE (m:Movie {title: "Arthur the King"})
+MERGE (u:User {name: "Adam"})
+MERGE (u)-[r:RATED {rating: 5}]->(m)
+RETURN u, r, m
+
+
+
+```
+
 
 
