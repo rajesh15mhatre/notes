@@ -104,9 +104,26 @@ MERGE (u:User {name: "Adam"})
 MERGE (u)-[r:RATED {rating: 5}]->(m)
 RETURN u, r, m
 
-
+--Create your own favourite movie
+MERGE (m:Movie {title: "Inception"})
+MERGE (u:User {name: "Rajesh"})
+MERGE (u)-[r:RATED {rating: 1}]->(m)
+RETURN u, r, m
 
 ```
 
+## 7. Get Neo4j
+There are many options to use Neo4j, including a fully hosted cloud solution (AuraDB), local installations, and Docker containers.
+Links:
+- [Installations](https://neo4j.com/docs/operations-manual/current/installation/?_gl=1*kn51eh*_gcl_au*MjAwNjI2OTMwOS4xNzQ1NjUxOTYx*_ga*Mzc1MTg2MjkyLjE3NDU2NTE5NjE.*_ga_DL38Q8KGQC*MTc0NTc0OTkyOS40LjEuMTc0NTc1MDU4Ny4wLjAuMA..*_ga_DZP8Z65KK4*MTc0NTc0OTkyOC40LjEuMTc0NTc1MDU4Ny4wLjAuMA..)
+- [Aura DB](https://neo4j.com/product/auradb/?_gl=1*kn51eh*_gcl_au*MjAwNjI2OTMwOS4xNzQ1NjUxOTYx*_ga*Mzc1MTg2MjkyLjE3NDU2NTE5NjE.*_ga_DL38Q8KGQC*MTc0NTc0OTkyOS40LjEuMTc0NTc1MDU4Ny4wLjAuMA..*_ga_DZP8Z65KK4*MTc0NTc0OTkyOC40LjEuMTc0NTc1MDU4Ny4wLjAuMA..)
+- [Editions](https://neo4j.com/docs/operations-manual/current/introduction/?_gl=1*kn51eh*_gcl_au*MjAwNjI2OTMwOS4xNzQ1NjUxOTYx*_ga*Mzc1MTg2MjkyLjE3NDU2NTE5NjE.*_ga_DL38Q8KGQC*MTc0NTc0OTkyOS40LjEuMTc0NTc1MDU4Ny4wLjAuMA..*_ga_DZP8Z65KK4*MTc0NTc0OTkyOC40LjEuMTc0NTc1MDU4Ny4wLjAuMA..#_neo4j_editions)
+- [Neo4j Desktop](https://neo4j.com/download/?_gl=1*1cryvm4*_gcl_au*MjAwNjI2OTMwOS4xNzQ1NjUxOTYx*_ga*Mzc1MTg2MjkyLjE3NDU2NTE5NjE.*_ga_DL38Q8KGQC*MTc0NTc0OTkyOS40LjEuMTc0NTc1MTEyOC4wLjAuMA..*_ga_DZP8Z65KK4*MTc0NTc0OTkyOC40LjEuMTc0NTc1MTEyOC4wLjAuMA..)
+- [Cloud Deployments](https://neo4j.com/docs/operations-manual/current/cloud-deployments/?_gl=1*e8lpbw*_gcl_au*MjAwNjI2OTMwOS4xNzQ1NjUxOTYx*_ga*Mzc1MTg2MjkyLjE3NDU2NTE5NjE.*_ga_DL38Q8KGQC*MTc0NTc0OTkyOS40LjEuMTc0NTc1MTE4OC4wLjAuMA..*_ga_DZP8Z65KK4*MTc0NTc0OTkyOC40LjEuMTc0NTc1MTE4OC4wLjAuMA..)
+- [Docker](https://neo4j.com/docs/operations-manual/current/docker/?_gl=1*e8lpbw*_gcl_au*MjAwNjI2OTMwOS4xNzQ1NjUxOTYx*_ga*Mzc1MTg2MjkyLjE3NDU2NTE5NjE.*_ga_DL38Q8KGQC*MTc0NTc0OTkyOS40LjEuMTc0NTc1MTE4OC4wLjAuMA..*_ga_DZP8Z65KK4*MTc0NTc0OTkyOC40LjEuMTc0NTc1MTE4OC4wLjAuMA..)
 
-
+## 8. Neo4j Tools
+- The Neo4j Console
+- Programming drivers
+- APIs & Libraries
+- Neo4j labs innovations
