@@ -3,29 +3,29 @@
 ## 1. Graph Thinking
 URL: https://graphacademy.neo4j.com/courses/neo4j-fundamentals/?category=beginners
 
-Neo4j is graph DB which consists of Node and vertices. Node has 1 or more labels as text and properties as key-value pairs.
-Vertices have one or two-way relationships.
-So finally, a graph DB consists of nodes, labels, properties, vertices, and relationships.
+Neo4j is graph DB which consists of Nodes (Vertices) and Edges. Node has 1 or more labels as text and properties as key-value pairs.
+Vertices(Nodes) have one or two-way relationships.
+So finally, a graph DB consists of nodes(Vertices), labels, properties, and relationships.
 
-- Node: means noun company, person or object like: facebook
+- Node: means a noun EX, company, person or object like: Facebook
 - Label: node facebook may have the label as "company"
-- Properties:  node facebook can have a property in key-value format ex,  "website: www.facebook.com"
+- Properties:  node facebook can have a property in key-value format ex,  "website: www.facebook.com", "Type: Social Media"
 - Relationship: Node can have a Bi-directional relationship ex: Jhon --"works at"--> facebook and facebook --"employs"--> Jhon
 
 
 ## 2. Thinking in Graphs:
 Different NoSQL DB use case:
-- Document stores offer flexibility.
-- Wide-column stores offer scalability for large datasets.
-- Key-value stores provide simplicity and high performance.
-- Graph databases enable efficient modeling and querying of complex relationships.
+- Document store offers flexibility.
+- Wide-column store offers scalability for large datasets.
+- Key-value store provides simplicity and high performance.
+- Graph databases enables efficient modeling and querying of complex relationships.
  
 A graph database yields much faster results for queries across entities and is a great fit when you need to:
-Understand the relationships between entities - for example, how two people are connected.
-Self referenced data of the same type - for example, a hierarchy of employees within a company. 
-Explore relationships of varying or unknown depth - for example, the use of parts within a factory. 
-Calculate a route between two points in a network - for example, finding the most efficient route on public transport. 
-Graph databases are a great fit for scenarios when you need to handle relationships efficiently.
+- Understand the relationships between entities - for example, how two people are connected.
+- Self-referenced data of the same type - for example, a hierarchy of employees within a company. 
+- Explore relationships of varying or unknown depth - for example, the use of parts within a factory. 
+- Calculate a route between two points in a network - for example, finding the most efficient route on public transport. 
+- Graph databases are a great fit for scenarios when you need to handle relationships efficiently.
 
 
 ## 3. Graphs Are Everywhere
@@ -51,7 +51,7 @@ Graphs allow you to uncover patterns in your data, whether that be:
 ## 4. Querying Graphs
 GQL, an ISO standard for graph databases. Cypher is Neo4j's GQL implementation. Below is sample query.
 ```
--- Finding person
+-- Finding pa erson
 MATCH (n:Person)
 WHERE n.name = 'Tom Hanks'
 RETURN n
@@ -61,7 +61,7 @@ MATCH (m:Movie)<-[r:ACTED_IN]-(p:Person)
 WHERE m.title = 'Toy Story'
 RETURN m, r, p
 
--- querying genre of a movie
+-- querying the genre of a movie
 MATCH (m:Movie)-[r:IN_GENRE]->(g:Genre)
 WHERE m.title = 'Toy Story'
 RETURN m, r, g
