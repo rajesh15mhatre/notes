@@ -129,3 +129,131 @@ RETURN p.name, p.born
 ```
 
 ## Writing Data to Neo4j
+We use the MERGE keyword to create a pattern in the database. After the MERGE keyword, we specify the pattern that we want to create.
+When you use MERGE to create a node, you must specify at least one property that will be the unique primary key for the node.
+```
+--create a node to represent Michael Caine
+MERGE (p:Person {name: 'Michael Caine'})
+
+--Verify if node is created
+MATCH (p:Person {name: 'Michael Caine'})
+RETURN p
+
+--Executing multiple Cypher clauses
+MERGE (p:Person {name: 'Katie Holmes'})
+MERGE (m:Movie {title: 'The Dark Knight'})
+RETURN p, m
+
+```
+The benefit of using CREATE is that it does not look up the primary key before adding the node. You can use CREATE if you are sure your data is clean and you want greater speed during import. 
+
+TEST
+```
+--Create a new Person node for Daniel Kaluuya
+MERGE (p:Person {name: 'Daniel Kaluuya'})
+
+--Check if node is created
+MATCH (p:Person {name: 'Daniel Kaluuya})
+RETURN p
+```
+
+## Creating a relationship between two nodes
+```
+--Find existing Person and Movie and create a relationship
+MATCH (p:Person {name: 'Michael Caine'})
+MATCH (m:Movie {title: 'The Dark Knight'})
+MERGE (p)-[:ACTED_IN]->(m)
+
+--Confirm relatioship is created
+MATCH (p:Person {name: 'Michael Caine'})-[:ACTED_IN]-(m:Movie {title: 'The Dark Knight'})
+RETURN p, m
+
+--Creating nodes and relationships using multiple clauses
+MERGE (p:Person {name: 'Chadwick Boseman'})
+MERGE (m:Movie {title: 'Black Panther'})
+MERGE (p)-[:ACTED_IN]-(m)
+--NOTE: By default, if you do not specify the direction when you create the relationship, it will always be assumed left-to-right.
+
+--Check the created graph and relationship is created left to right direction
+MATCH (p:Person {name: 'Chadwick Boseman'})-[:ACTED_IN]-(m:Movie {title: 'Black Panther'})
+RETURN p, m
+
+--Create nodes and a relationship in single clause
+MERGE (p:Person {name: 'Emily Blunt'})-[:ACTED_IN]->(m:Movie {title: 'A Quiet Place'})
+RETURN p, m
+--NOTE: We can execute this Cypher code multiple times and it will not create any new nodes or relationships.
+
+------TEST------
+--Ways to create a relationship from a to b
+MERGE (a)-[:LIKES]→(b)
+MERGE (a)-[:LIKES]-(b)
+```
+
+## Updating Properties
+```
+--Set a property for a relationship inline as part of the MERGE clause
+MATCH (p:Person {name: 'Michael Caine'})
+MERGE (m:Movie {title: 'Batman Begins'})
+MERGE (p)-[:ACTED_IN {roles: ['Alfred Penny']}]->(m)
+RETURN p,m
+  
+--SET keyword for a reference to a node or relationship
+MATCH (p:Person)-[r:ACTED_IN]->(m:Movie)
+WHERE p.name = 'Michael Caine' AND m.title = 'The Dark Knight'
+SET r.roles = ['Alfred Penny']
+RETURN p, r, m
+
+---Setting multiple properties
+MATCH (p:Person)-[r:ACTED_IN]->(m:Movie)
+WHERE p.name = 'Michael Caine' AND m.title = 'The Dark Knight'
+SET r.roles = ['Alfred Penny'], m.released = 2008
+RETURN p, r, m
+
+--Updating properties
+MATCH (p:Person)-[r:ACTED_IN]->(m:Movie)
+WHERE p.name = 'Michael Caine' AND m.title = 'The Dark Knight'
+SET r.roles = ['Mr. Alfred Penny']
+RETURN p, r, m
+
+--Removing properties from relationship
+MATCH (p:Person)-[r:ACTED_IN]->(m:Movie)
+WHERE p.name = 'Michael Caine' AND m.title = 'The Dark Knight'
+REMOVE r.roles
+RETURN p, r, m
+
+--Removing properties from node
+MATCH (p:Person)
+WHERE p.name = 'Gene Hackman'
+SET p.born = null
+RETURN p
+
+----TEST----
+--Remove tagline properties from all movie nodes
+MATCH (m:Movie)
+REMOVE m.tagline
+RETURN  m
+
+--Modify this Cypher to use the SET clause to add the following properties to the Movie node: tagline: Gripping, scary, witty and timely! released: 2017
+MATCH (m:Movie {title: 'Get Out'})
+SET m.tagline = 'Gripping, scary, witty and timely!'
+SET m.released = 2017
+RETURN m.title, m.tagline, m.released
+
+```
+You can remove or delete a property from a node or relationship by using the **REMOVE** keyword, or setting the property to **null**.
+**NOTE: You should never remove the property that is used as the primary key for a node.**
+
+## Merge Processing
+MERGE operations work by first trying to find a pattern in the graph. If the pattern is found then the data already exists and is not created. If the pattern is not found, then the data can be created.
+- Customizing MERGE behavior
+When we run below code 1st time createdAt property gets adeed and when we run it next time updatedAt properties get created and all next run updatedAt gets updated
+```
+MERGE (p:Person {name: 'Raj Kumar'})
+// Only set the `createdAt` property if the node is created during this query
+ON CREATE SET p.createdAt = datetime()
+// Only set the `updatedAt` property if the node was created previously
+ON MATCH SET p.updatedAt = datetime()
+// Set the `born` property regardless
+SET p.born = 2006
+RETURN p
+```
