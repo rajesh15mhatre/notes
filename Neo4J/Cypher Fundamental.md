@@ -256,4 +256,90 @@ ON MATCH SET p.updatedAt = datetime()
 // Set the `born` property regardless
 SET p.born = 2006
 RETURN p
+
+--TEST : How can we update this code to include her birth year of 1911?
+
+MERGE (p:Person {name: 'Lucille Ball'})
+????
+SET p.born = 1911
+RETURN p
+ANS: Using ON MATCH
+
+--TEST: user timestamp on node creation and updation time
+MERGE (m:Movie {title: 'Rocketman'})
+ON CREATE SET m.createdAt = datetime()
+ON MATCH SET m.updatedAt = datetime()
+SET m.tagline = "The Only Way to Tell His Story is to live His Fantasy.",
+    m.released = 2019
+RETURN m
+
 ```
+## Deleting data
+```
+--Create and delete the node
+MERGE (p:Person {name: 'Raj'})
+RETURN p
+
+MATCH (p:Person {name: 'Raj'})
+DELETE p
+
+--Delete node with relationship will give error to delete command
+--Create node and relationship
+MATCH (m:Movie {title: 'The Matrix'})
+MERGE (p:Person {name: 'Raj'})
+MERGE (p)-[r:ACTED_IN]->(m)
+RETURN m, p, r
+--YOU EILL GET ERROR
+MATCH (m:Movie {title: 'The Matrix'})-[r:ACTED_IN]->(p:Person {name: 'Raj'})
+DELETE p
+
+--USE "DETACH DELETE" TO delete the node with the relationship
+MATCH (m:Movie {title: 'The Matrix'})-[r:ACTED_IN]->(p:Person {name: 'Raj'})
+DETACH DELETE p
+
+------WARNING------
+Code below will delete the entire graph DB
+MATCH (n)
+DETACH DELETE n
+-----------------
+
+--Create and delete a relationship
+MATCH (m:Movie {title: 'The Matrix'})
+MERGE (p:Person {name: 'Raj'})
+MERGE (p)-[r:ACTED_IN]->(m)
+RETURN m, p, r
+
+MATCH (m:Movie {title: 'The Matrix'})-[r:ACTED_IN]->(p:Person {name: 'Raj'})
+DELETE r
+RETURN p, m
+
+--Deleting labels
+--CREATE a node and a lable
+MERGE (p:Person {name: 'Raj'})
+SET p:developer
+RETURN P
+
+MATCH (p:Person {name: 'Raj'})
+REMOVE p:Developer
+RETURN p
+
+
+---------CHECK ALL THE LABLES EXISTS IN GRAPH-----
+CALL db.labels()
+
+```
+TEST
+
+```
+--DELETE A person 
+--Check a person in the graph who has any relationship with any node
+MATCH (e:Person {name: "Emil Eifrem"})-[]->(n)
+RETURN e, n
+
+MATCH (e:Person {name: "Emil Eifrem"})-[]->(n)
+DETACH DELETE e
+```
+
+
+
+
